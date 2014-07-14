@@ -1,0 +1,34 @@
+{
+  "name": "blankie",
+  "version": "0.0.0",
+  "description": "a content security policy plugin for hapi",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -t 100"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nlf/blankie.git"
+  },
+  "keywords": [
+    "hapi",
+    "csp",
+    "plugin"
+  ],
+  "author": "Nathan LaFreniere <quitlahok@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nlf/blankie/issues"
+  },
+  "homepage": "https://github.com/nlf/blankie",
+  "devDependencies": {
+    "hapi": "^6.0.2",
+    "jshint": "^2.5.2",
+    "lab": "^3.2.1",
+    "precommit-hook": "^1.0.2"
+  },
+  "dependencies": {
+    "hoek": "^2.3.0",
+    "joi": "^4.6.1"
+  }
+}
