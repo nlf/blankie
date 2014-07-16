@@ -4,7 +4,11 @@ A CSP plugin for [hapi](https://github.com/spumko/hapi).
 
 ### Usage
 
-This plugin depends on [scooter](https://github.com/spumko/scooter) to function. To use it:
+This plugin depends on [scooter](https://github.com/spumko/scooter) to function.
+
+NOTE: As of this writing, there is a pending pull request to enable semver checking in user agent strings in scooter. Since it has not been merged yet, you must install the `features` branch of scooter with `npm install scooter@spumko/scooter#features`.
+
+To use it:
 
 ```javascript
 var Hapi = require('hapi');
