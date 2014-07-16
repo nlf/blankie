@@ -4,7 +4,7 @@
   "description": "a content security policy plugin for hapi",
   "main": "index.js",
   "scripts": {
-    "test": "lab -t 100"
+    "test": "make test-cov"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
-    "browser-agents": "0.0.0",
+    "browser-agents": "0.1.0",
     "hapi": "^6.0.2",
     "jshint": "^2.5.2",
     "lab": "^3.2.1",
