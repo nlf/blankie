@@ -168,4 +168,132 @@ describe('Generic headers', function () {
             });
         });
     });
+
+    it('can be disabled on a single route', function (done) {
+
+        var server = new Hapi.Server();
+        server.route(defaultRoute);
+        server.route({
+            method: 'GET',
+            path: '/disabled',
+            config: {
+                handler: function (request, reply) {
+
+                    reply('disabled');
+                },
+                plugins: {
+                    blankie: false
+                }
+            }
+        });
+        server.pack.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist;
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain.key('content-security-policy');
+                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                server.inject({
+                    method: 'GET',
+                    url: '/disabled'
+                }, function (res) {
+
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.headers).to.not.contain.key('content-security-policy');
+                    done();
+                });
+            });
+        });
+    });
+
+    it('can be overridden on a single route', function (done) {
+
+        var server = new Hapi.Server();
+        server.route(defaultRoute);
+        server.route({
+            method: 'GET',
+            path: '/overridden',
+            config: {
+                handler: function (request, reply) {
+
+                    reply('disabled');
+                },
+                plugins: {
+                    blankie: {
+                        defaultSrc: 'self'
+                    }
+                }
+            }
+        });
+        server.pack.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist;
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain.key('content-security-policy');
+                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                server.inject({
+                    method: 'GET',
+                    url: '/overridden'
+                }, function (res) {
+
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.headers).to.contain.key('content-security-policy');
+                    expect(res.headers['content-security-policy']).to.equal('default-src \'self\'');
+                    done();
+                });
+            });
+        });
+    });
+
+    it('self disables when a route override is invalid', function (done) {
+
+        var server = new Hapi.Server();
+        server.route(defaultRoute);
+        server.route({
+            method: 'GET',
+            path: '/invalid',
+            config: {
+                handler: function (request, reply) {
+
+                    reply('disabled');
+                },
+                plugins: {
+                    blankie: {
+                        sandbox: 'self'
+                    }
+                }
+            }
+        });
+        server.pack.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist;
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain.key('content-security-policy');
+                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                server.inject({
+                    method: 'GET',
+                    url: '/invalid'
+                }, function (res) {
+
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.headers).to.not.contain.key('content-security-policy');
+                    done();
+                });
+            });
+        });
+    });
 });

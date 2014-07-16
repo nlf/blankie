@@ -30,6 +30,36 @@ server.pack.register([Scooter, {
 });
 ```
 
+Options may also be set on a per-route basis:
+
+```javascript
+var Hapi = require('hapi');
+var Blankie = require('blankie');
+var Scooter = require('scooter');
+
+var server = new Hapi.Server();
+
+server.route({
+    method: 'GET',
+    path: '/something',
+    config: {
+        handler: function (request, reply) {
+
+            reply('these settings are changed');
+        },
+        plugins: {
+            blankie: {
+                scriptSrc: 'self'
+            }
+        }
+    }
+});
+```
+
+Note that this setting will *NOT* be merged with your server-wide settings.
+
+You may also set `config.plugins.blankie` equal to `false` on a route to disable CSP headers completely for that route.
+
 ### Options
 
 * `defaultSrc`: Values for the `default-src` directive. Defaults to `'none'`.
