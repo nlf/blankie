@@ -22,10 +22,12 @@
   },
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
+    "browser-agents": "0.0.0",
     "hapi": "^6.0.2",
     "jshint": "^2.5.2",
     "lab": "^3.2.1",
-    "precommit-hook": "^1.0.2"
+    "precommit-hook": "^1.0.2",
+    "scooter": "^1.2.0"
   },
   "dependencies": {
     "hoek": "^2.3.0",

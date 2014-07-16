@@ -1,6 +1,7 @@
 /* jshint -W030 */
 var Blankie = require('../');
 var Hapi = require('hapi');
+var Scooter = require('scooter');
 
 var Lab = require('lab');
 
@@ -13,7 +14,7 @@ describe('Blankie', function () {
     it('loads as a plugin', function (done) {
 
         var server = new Hapi.Server();
-        server.pack.register(Blankie, function (err) {
+        server.pack.register([Scooter, Blankie], function (err) {
 
             expect(err).to.not.exist;
             done();
@@ -23,12 +24,12 @@ describe('Blankie', function () {
     it('errors with invalid options', function (done) {
 
         var server = new Hapi.Server();
-        server.pack.register({
+        server.pack.register([Scooter, {
             plugin: Blankie,
             options: {
                 reportOnly: 'invalid value'
             }
-        }, function (err) {
+        }], function (err) {
         
             expect(err).to.exist;
             done();
