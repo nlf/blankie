@@ -90,6 +90,29 @@ describe('Firefox', function () {
         });
     });
 
+    it('sends defaults for firefox < 4', function (done) {
+
+        var server = new Hapi.Server();
+        server.route(defaultRoute);
+        server.pack.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist;
+            server.inject({
+                method: 'GET',
+                url: '/',
+                headers: {
+                    'User-Agent': Agents.Firefox['3.0']
+                }
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain.key('content-security-policy');
+                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                done();
+            });
+        });
+    });
+
     it('replaces unsafe-inline with inline-script for older firefox', function (done) {
 
         var server = new Hapi.Server();
