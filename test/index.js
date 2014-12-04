@@ -3,18 +3,20 @@ var Blankie = require('../');
 var Hapi = require('hapi');
 var Scooter = require('scooter');
 
+var Code = require('code');
 var Lab = require('lab');
+var lab = exports.lab = Lab.script();
 
-var describe = Lab.experiment;
-var expect = Lab.expect;
-var it = Lab.test;
+var describe = lab.experiment;
+var expect = Code.expect;
+var it = lab.test;
 
 describe('Blankie', function () {
 
     it('loads as a plugin', function (done) {
 
         var server = new Hapi.Server();
-        server.pack.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], function (err) {
 
             expect(err).to.not.exist;
             done();
@@ -24,8 +26,8 @@ describe('Blankie', function () {
     it('errors with invalid options', function (done) {
 
         var server = new Hapi.Server();
-        server.pack.register([Scooter, {
-            plugin: Blankie,
+        server.register([Scooter, {
+            register: Blankie,
             options: {
                 reportOnly: 'invalid value'
             }

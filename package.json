@@ -23,14 +23,12 @@
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
     "browser-agents": "0.1.0",
-    "hapi": "^6.0.2",
-    "jshint": "^2.5.2",
-    "lab": "^3.2.1",
-    "precommit-hook": "^1.0.2",
-    "scooter": "^1.2.0"
+    "hapi": ">= 8.0.0-rc8",
+    "lab": "^5.1.0",
+    "scooter": "git+https://github.com/hapijs/scooter#hapi8"
   },
   "dependencies": {
-    "hoek": "^2.3.0",
-    "joi": "^4.6.1"
+    "hoek": "^2.10.0",
+    "joi": "^5.0.2"
   }
 }
