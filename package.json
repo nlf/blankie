@@ -1,6 +1,6 @@
 {
   "name": "blankie",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "a content security policy plugin for hapi",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,10 @@
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
     "browser-agents": "0.1.0",
-    "hapi": ">= 8.0.0-rc8",
+    "code": "^1.2.1",
+    "hapi": ">= 8.0.0",
     "lab": "^5.1.0",
-    "scooter": "git+https://github.com/hapijs/scooter#hapi8"
+    "scooter": "^2.0.1"
   },
   "dependencies": {
     "hoek": "^2.10.0",
