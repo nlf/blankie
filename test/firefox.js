@@ -41,7 +41,11 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 done();
             });
         });
@@ -65,7 +69,11 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';xhr-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['x-content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('xhr-src \'self\'');
                 done();
             });
         });
@@ -89,7 +97,11 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('allow \'none\';script-src \'self\';style-src \'self\';img-src \'self\';xhr-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('allow \'none\'');
+                expect(res.headers['x-content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('xhr-src \'self\'');
                 done();
             });
         });
@@ -113,7 +125,11 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 done();
             });
         });
@@ -142,7 +158,7 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('script-src \'inline-script\'');
+                expect(res.headers['x-content-security-policy']).to.contain('script-src \'inline-script\'');
                 done();
             });
         });
@@ -171,7 +187,7 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('script-src \'eval-script\'');
+                expect(res.headers['x-content-security-policy']).to.contain('script-src \'eval-script\'');
                 done();
             });
         });
@@ -200,7 +216,7 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('object-src \'self\'');
+                expect(res.headers['x-content-security-policy']).to.contain('object-src \'self\'');
                 done();
             });
         });
@@ -229,7 +245,7 @@ describe('Firefox', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('');
+                expect(res.headers['x-content-security-policy']).to.not.contain('object-src');
                 done();
             });
         });

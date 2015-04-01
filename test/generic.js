@@ -37,7 +37,11 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 done();
             });
         });
@@ -58,7 +62,11 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 done();
             });
         });
@@ -86,7 +94,8 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy-report-only');
-                expect(res.headers['content-security-policy-report-only']).to.equal('default-src \'self\';report-uri /csp_report');
+                expect(res.headers['content-security-policy-report-only']).to.contain('default-src \'self\'');
+                expect(res.headers['content-security-policy-report-only']).to.contain('report-uri /csp_report');
                 done();
             });
         });
@@ -114,7 +123,11 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(500);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 done();
             });
         });
@@ -140,7 +153,7 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('sandbox');
+                expect(res.headers['content-security-policy']).to.contain('sandbox');
                 done();
             });
         });
@@ -166,7 +179,7 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src *');
+                expect(res.headers['content-security-policy']).to.contain('default-src *');
                 done();
             });
         });
@@ -192,7 +205,7 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src * \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src * \'self\'');
                 done();
             });
         });
@@ -226,7 +239,11 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 server.inject({
                     method: 'GET',
                     url: '/disabled'
@@ -270,7 +287,11 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 server.inject({
                     method: 'GET',
                     url: '/overridden'
@@ -278,7 +299,7 @@ describe('Generic headers', function () {
 
                     expect(res.statusCode).to.equal(200);
                     expect(res.headers).to.contain('content-security-policy');
-                    expect(res.headers['content-security-policy']).to.equal('default-src \'self\'');
+                    expect(res.headers['content-security-policy']).to.contain('default-src \'self\'');
                     done();
                 });
             });
@@ -315,7 +336,11 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 server.inject({
                     method: 'GET',
                     url: '/invalid'

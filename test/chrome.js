@@ -41,7 +41,11 @@ describe('Chrome', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 done();
             });
         });
@@ -65,7 +69,11 @@ describe('Chrome', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
-                expect(res.headers['content-security-policy']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
                 done();
             });
         });
@@ -89,7 +97,11 @@ describe('Chrome', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-webkit-csp');
-                expect(res.headers['x-webkit-csp']).to.equal('default-src \'none\';script-src \'self\';style-src \'self\';img-src \'self\';connect-src \'self\'');
+                expect(res.headers['x-webkit-csp']).to.contain('default-src \'none\'');
+                expect(res.headers['x-webkit-csp']).to.contain('script-src \'self\'');
+                expect(res.headers['x-webkit-csp']).to.contain('style-src \'self\'');
+                expect(res.headers['x-webkit-csp']).to.contain('img-src \'self\'');
+                expect(res.headers['x-webkit-csp']).to.contain('connect-src \'self\'');
                 done();
             });
         });

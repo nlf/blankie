@@ -60,16 +60,22 @@ You may also set `config.plugins.blankie` equal to `false` on a route to disable
 
 ### Options
 
+* `childSrc`: Values for `child-src` directive.
+* `connectSrc`: Values for the `connect-src` directive. Defaults `'self'`.
 * `defaultSrc`: Values for the `default-src` directive. Defaults to `'none'`.
+* `fontSrc`: Values for the `font-src` directive.
+* `formAction`: Values for the `form-action` directive.
+* `frameAncestors`: Values for the `frame-ancestors` directive.
+* `frameSrc`: Values for the `frame-src` directive.
+* `imgSrc`: Values for the `image-src` directive. Defaults to `'self'`.
+* `manifestSrc`: Values for the `manifest-src` directive.
+* `mediaSrc`: Values for the `media-src` directive.
+* `objectSrc`: Values for the `object-src` directive.
+* `oldSafari`: Force enabling buggy CSP for Safari 5.
+* `pluginTypes`: Values for the `plugin-types` directive.
+* `reflectedXss`: Value for the `reflected-xss` directive. Must be one of `'allow'`, `'block'` or `'filter'`.
+* `reportOnly`: Append '-Report-Only' to the name of the CSP header to enable report only mode.
+* `reportUri`: Value for the `report-uri` directive. This should be the path to a route that accepts CSP violation reports.
+* `sandbox`: Values for the `sandbox` directive. May be a boolean or one of `'allow-forms'`, `'allow-same-origin'`, `'allow-scripts'` or `'allow-top-navigation'`.
 * `scriptSrc`: Values for the `script-src` directive. Defaults to `'self'`.
 * `styleSrc`: Values for the `style-src` directive. Defaults to `'self'`.
-* `imgSrc`: Values for the `image-src` directive. Defaults to `'self'`.
-* `connectSrc`: Values for the `connect-src` directive. Defaults `'self'`.
-* `fontSrc`: Values for the `font-src` directive.
-* `objectSrc`: Values for the `object-src` directive.
-* `mediaSrc`: Values for the `media-src` directive.
-* `frameSrc`: Values for the `frame-src` directive.
-* `sandbox`: Values for the `sandbox` directive.
-* `reportUri`: Value for the `report-uri` directive. This should be the path to a route that accepts CSP violation reports.
-* `reportOnly`: Append '-Report-Only' to the name of the CSP header to enable report only mode.
-* `oldSafari`: Force enabling buggy CSP for Safari 5.
