@@ -30,7 +30,7 @@ describe('Internet Explorer', function () {
         server.route(defaultRoute);
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -59,7 +59,7 @@ describe('Internet Explorer', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',

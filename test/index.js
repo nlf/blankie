@@ -18,7 +18,7 @@ describe('Blankie', function () {
         var server = new Hapi.Server();
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             done();
         });
     });
@@ -33,7 +33,7 @@ describe('Blankie', function () {
             }
         }], function (err) {
         
-            expect(err).to.exist;
+            expect(err).to.exist();
             done();
         });
     });

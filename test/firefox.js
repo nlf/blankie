@@ -30,7 +30,7 @@ describe('Firefox', function () {
         server.route(defaultRoute);
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -58,7 +58,7 @@ describe('Firefox', function () {
         server.route(defaultRoute);
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -86,7 +86,7 @@ describe('Firefox', function () {
         server.route(defaultRoute);
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -114,7 +114,7 @@ describe('Firefox', function () {
         server.route(defaultRoute);
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -147,7 +147,7 @@ describe('Firefox', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -176,7 +176,7 @@ describe('Firefox', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -205,7 +205,7 @@ describe('Firefox', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',
@@ -234,7 +234,7 @@ describe('Firefox', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/',

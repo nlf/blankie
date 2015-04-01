@@ -29,7 +29,7 @@ describe('Generic headers', function () {
         server.route(defaultRoute);
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -54,7 +54,7 @@ describe('Generic headers', function () {
         server.route(defaultRoute);
         server.register(Blankie, function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -86,7 +86,7 @@ describe('Generic headers', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -115,7 +115,7 @@ describe('Generic headers', function () {
         });
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -145,7 +145,7 @@ describe('Generic headers', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -171,7 +171,7 @@ describe('Generic headers', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -197,7 +197,7 @@ describe('Generic headers', function () {
             }
         }], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -231,7 +231,7 @@ describe('Generic headers', function () {
         });
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -279,7 +279,7 @@ describe('Generic headers', function () {
         });
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
@@ -328,7 +328,7 @@ describe('Generic headers', function () {
         });
         server.register([Scooter, Blankie], function (err) {
 
-            expect(err).to.not.exist;
+            expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
