@@ -16,6 +16,7 @@ describe('Blankie', function () {
     it('loads as a plugin', function (done) {
 
         var server = new Hapi.Server();
+        server.connection();
         server.register([Scooter, Blankie], function (err) {
 
             expect(err).to.not.exist();
@@ -26,6 +27,7 @@ describe('Blankie', function () {
     it('errors with invalid options', function (done) {
 
         var server = new Hapi.Server();
+        server.connection();
         server.register([Scooter, {
             register: Blankie,
             options: {
