@@ -15,8 +15,8 @@ var Scooter = require('scooter');
 
 var server = new Hapi.Server();
 
-server.pack.register([Scooter, {
-    plugin: Blankie,
+server.register([Scooter, {
+    register: Blankie,
     options: {} // specify options here
 }], function (err) {
     
