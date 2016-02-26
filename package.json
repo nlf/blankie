@@ -22,11 +22,13 @@
   },
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
-    "browser-agents": "0.1.0",
+    "browser-agents": "^1.0.1",
     "code": "^1.4.0",
-    "hapi": ">= 8.0.0",
+    "handlebars": "^4.0.5",
+    "hapi": ">= 8.0.0 < 11.0.0",
     "lab": "^5.5.1",
-    "scooter": "^2.0.1"
+    "scooter": "^2.0.1",
+    "vision": ">= 1.0.0 < 4.0.0"
   },
   "dependencies": {
     "hoek": "^2.12.0",

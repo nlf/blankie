@@ -1,7 +1,9 @@
 /* jshint -W030 */
 var Blankie = require('../');
+var Crypto = require('crypto');
 var Hapi = require('hapi');
 var Scooter = require('scooter');
+var Vision = require('vision');
 
 var Code = require('code');
 var Lab = require('lab');
@@ -38,10 +40,85 @@ describe('Generic headers', function () {
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
                 expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
-                expect(res.headers['content-security-policy']).to.contain('script-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-'); // only checks for the nonce- prefix since it's a random value
                 expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
                 expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
                 expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+                done();
+            });
+        });
+    });
+
+    it('adds a nonce to view contexts', function (done) {
+
+        var server = new Hapi.Server();
+        server.connection();
+        server.register([Scooter, Blankie, Vision], function (err) {
+
+            expect(err).to.not.exist();
+            server.views({
+                engines: {
+                    html: require('handlebars')
+                },
+                path: __dirname + '/templates'
+            });
+
+            server.route({
+                method: 'GET',
+                path: '/',
+                handler: function (request, reply) {
+
+                    reply.view('nonce');
+                }
+            });
+
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.result.length).to.be.above(1);
+                var nonces = res.result.trim().split('\n');
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-' + nonces[0] + '\'');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\' \'nonce-' + nonces[1] + '\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+                done();
+            });
+        });
+    });
+
+    it('does not blow up if Crypto.pseudoRandomBytes happens to throw', function (done) {
+
+        var server = new Hapi.Server();
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist();
+            Crypto._randomBytes = Crypto.randomBytes;
+            Crypto.randomBytes = function () {
+
+                throw new Error('mocked failure');
+            };
+
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-'); // only checks for the nonce- prefix since it's a random value
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+                Crypto.randomBytes = Crypto._randomBytes;
+                delete Crypto._randomBytes;
                 done();
             });
         });

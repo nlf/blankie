@@ -19,7 +19,7 @@ server.register([Scooter, {
     register: Blankie,
     options: {} // specify options here
 }], function (err) {
-    
+
     if (err) {
         throw err;
     }
@@ -79,3 +79,4 @@ You may also set `config.plugins.blankie` equal to `false` on a route to disable
 * `sandbox`: Values for the `sandbox` directive. May be a boolean or one of `'allow-forms'`, `'allow-same-origin'`, `'allow-scripts'` or `'allow-top-navigation'`.
 * `scriptSrc`: Values for the `script-src` directive. Defaults to `'self'`.
 * `styleSrc`: Values for the `style-src` directive. Defaults to `'self'`.
+* `generateNonces`: Whether or not to automatically generate nonces. Defaults to `true`. When enabled your templates will have `script-nonce` and `style-nonce` automatically added to their context.
