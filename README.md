@@ -76,6 +76,7 @@ You may also set `config.plugins.blankie` equal to `false` on a route to disable
 * `reflectedXss`: Value for the `reflected-xss` directive. Must be one of `'allow'`, `'block'` or `'filter'`.
 * `reportOnly`: Append '-Report-Only' to the name of the CSP header to enable report only mode.
 * `reportUri`: Value for the `report-uri` directive. This should be the path to a route that accepts CSP violation reports.
+* `requireSriFor`: Value for `require-sri-for` directive.
 * `sandbox`: Values for the `sandbox` directive. May be a boolean or one of `'allow-forms'`, `'allow-same-origin'`, `'allow-scripts'` or `'allow-top-navigation'`.
 * `scriptSrc`: Values for the `script-src` directive. Defaults to `'self'`.
 * `styleSrc`: Values for the `style-src` directive. Defaults to `'self'`.
