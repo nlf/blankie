@@ -91,6 +91,48 @@ describe('Generic headers', function () {
         });
     });
 
+    it('should not allow setting \'strict-dynamic\' without nonce', function (done) {
+
+        var server = new Hapi.Server();
+        var options = {
+            scriptSrc: ['strict-dynamic'],
+            generateNonces: false
+        }
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+
+            expect(err).to.exist();
+            expect(err.name).to.equal('ValidationError')
+            expect(err.details[0].path).to.equal('scriptSrc.0')
+            done()
+        });
+    });
+
+    it('should allow setting \'strict-dynamic\'', function (done) {
+
+        var server = new Hapi.Server();
+        var options = {
+            scriptSrc: ['self', 'strict-dynamic'],
+        }
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'strict-dynamic\' \'nonce-');
+                done()
+            })
+        });
+    });
+
     it('does not blow up if Crypto.pseudoRandomBytes happens to throw', function (done) {
 
         var server = new Hapi.Server();
