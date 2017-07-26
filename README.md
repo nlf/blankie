@@ -78,6 +78,6 @@ You may also set `config.plugins.blankie` equal to `false` on a route to disable
 * `reportUri`: Value for the `report-uri` directive. This should be the path to a route that accepts CSP violation reports.
 * `requireSriFor`: Value for `require-sri-for` directive.
 * `sandbox`: Values for the `sandbox` directive. May be a boolean or one of `'allow-forms'`, `'allow-same-origin'`, `'allow-scripts'` or `'allow-top-navigation'`.
-* `scriptSrc`: Values for the `script-src` directive. Defaults to `'self'`. NOTE: when `generateNonces` is `true` or `script`, `'unsafe-inline'` is not allowed here.
+* `scriptSrc`: Values for the `script-src` directive. Defaults to `'self'`.
 * `styleSrc`: Values for the `style-src` directive. Defaults to `'self'`.
 * `generateNonces`: Whether or not to automatically generate nonces. Defaults to `true`. May be a boolean or one of `'script'` or `'style'`. When enabled your templates will have `script-nonce` and/or `style-nonce` automatically added to their context.
