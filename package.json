@@ -6,6 +6,9 @@
   "scripts": {
     "test": "lab -a code -t 100 -L"
   },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
   "files": [
     "lib"
   ],
