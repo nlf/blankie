@@ -129,7 +129,7 @@ describe('Generic headers', function () {
         }
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, { register: Blankie, options }], function (err) {
+        server.register([Scooter, { register: Blankie, options: options }], function (err) {
 
             expect(err).to.not.exist();
             server.inject({
@@ -144,6 +144,83 @@ describe('Generic headers', function () {
                 expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
                 expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
                 expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+                done();
+            });
+        });
+    });
+
+    it('allows settings strict-dynamic with corresponding nonces', function (done) {
+
+        var server = new Hapi.Server();
+        var options = {
+            scriptSrc: ['strict-dynamic'],
+            styleSrc: ['strict-dynamic'],
+            generateNonces: true
+        };
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'strict-dynamic\' \'nonce-');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'strict-dynamic\' \'nonce-');
+                done();
+            });
+        });
+    });
+
+    it('allows creating nonces for only script-src', function (done) {
+
+        var server = new Hapi.Server();
+        var options = {
+            generateNonces: 'script'
+        };
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-');
+                expect(res.headers['content-security-policy']).to.not.contain('style-src \'self\' \'nonce-');
+                done();
+            });
+        });
+    });
+
+    it('allows creating nonces for only style-src', function (done) {
+
+        var server = new Hapi.Server();
+        var options = {
+            generateNonces: 'style'
+        };
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\' \'nonce-');
+                expect(res.headers['content-security-policy']).to.not.contain('script-src \'self\' \'nonce-');
                 done();
             });
         });
