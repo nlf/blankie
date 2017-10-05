@@ -121,6 +121,33 @@ describe('Generic headers', function () {
         });
     });
 
+    it('adds a nonce to plugin properties in request', function (done) {
+
+        var server = new Hapi.Server();
+        server.connection();
+        server.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist();
+
+            server.route({
+                method: 'GET',
+                path: '/',
+                handler: function (request, reply) {
+                    reply.continue();
+                }
+            });
+
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+                expect(res.request.plugins.blankie.scriptSrcNonce.length).to.equal(32);
+                expect(res.request.plugins.blankie.styleSrcNonce.length).to.equal(32);
+                done();
+            });
+        });
+    });
+
     it('does not blow up if Crypto.pseudoRandomBytes happens to throw', function (done) {
 
         var server = new Hapi.Server();
