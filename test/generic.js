@@ -480,6 +480,38 @@ describe('Generic headers', () => {
         });
     });
 
+    it('exposes nonces on request.plugins.blankie.nonces', (done) => {
+
+        const server = new Hapi.Server();
+        const options = {
+            generateNonces: true
+        };
+        server.connection();
+        server.route({
+            method: 'GET',
+            path: '/',
+            handler: function (request, reply) {
+
+                return reply(request.plugins.blankie.nonces);
+            }
+        });
+        server.register([Scooter, { register: Blankie, options }], (err) => {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, (res) => {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.result).to.contain(['style', 'script']);
+                expect(res.result.style).to.be.a.string();
+                expect(res.result.script).to.be.a.string();
+                done();
+            });
+        });
+    });
+
     it('can be disabled on a single route', (done) => {
 
         const server = new Hapi.Server();
