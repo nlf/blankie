@@ -1,18 +1,19 @@
-/* jshint -W030 */
-var Agents = require('browser-agents');
-var Blankie = require('../');
-var Hapi = require('hapi');
-var Scooter = require('scooter');
+'use strict';
 
-var Code = require('code');
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
+const Agents = require('browser-agents');
+const Blankie = require('../');
+const Hapi = require('hapi');
+const Scooter = require('scooter');
 
-var describe = lab.experiment;
-var expect = Code.expect;
-var it = lab.test;
+const Code = require('code');
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 
-var defaultRoute = {
+const describe = lab.experiment;
+const expect = Code.expect;
+const it = lab.test;
+
+const defaultRoute = {
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
@@ -21,14 +22,14 @@ var defaultRoute = {
     }
 };
 
-describe('Chrome', function () {
+describe('Chrome', () => {
 
-    it('sends defaults for chrome > 25', function (done) {
+    it('sends defaults for chrome > 25', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -37,7 +38,7 @@ describe('Chrome', function () {
                 headers: {
                     'User-Agent': Agents.Chrome['26.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -51,12 +52,12 @@ describe('Chrome', function () {
         });
     });
 
-    it('sends defaults for chrome < 14', function (done) {
+    it('sends defaults for chrome < 14', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -65,7 +66,7 @@ describe('Chrome', function () {
                 headers: {
                     'User-Agent': Agents.Chrome['13.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -79,12 +80,12 @@ describe('Chrome', function () {
         });
     });
 
-    it('sends x-webkit-csp for > 14 and < 25', function (done) {
+    it('sends x-webkit-csp for > 14 and < 25', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -93,7 +94,7 @@ describe('Chrome', function () {
                 headers: {
                     'User-Agent': Agents.Chrome['15.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-webkit-csp');

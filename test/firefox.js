@@ -1,18 +1,19 @@
-/* jshint -W030 */
-var Agents = require('browser-agents');
-var Blankie = require('../');
-var Hapi = require('hapi');
-var Scooter = require('scooter');
+'use strict';
 
-var Code = require('code');
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
+const Agents = require('browser-agents');
+const Blankie = require('../');
+const Hapi = require('hapi');
+const Scooter = require('scooter');
 
-var describe = lab.experiment;
-var expect = Code.expect;
-var it = lab.test;
+const Code = require('code');
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 
-var defaultRoute = {
+const describe = lab.experiment;
+const expect = Code.expect;
+const it = lab.test;
+
+const defaultRoute = {
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
@@ -21,14 +22,14 @@ var defaultRoute = {
     }
 };
 
-describe('Firefox', function () {
+describe('Firefox', () => {
 
-    it('sends defaults for firefox > 23', function (done) {
+    it('sends defaults for firefox > 23', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -37,7 +38,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['24.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -51,12 +52,12 @@ describe('Firefox', function () {
         });
     });
 
-    it('sends firefox specific headers for >= 5 < 24', function (done) {
+    it('sends firefox specific headers for >= 5 < 24', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -65,7 +66,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['23.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
@@ -79,12 +80,12 @@ describe('Firefox', function () {
         });
     });
 
-    it('sends allow instead of default-src for firefox 4', function (done) {
+    it('sends allow instead of default-src for firefox 4', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -93,7 +94,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['4.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
@@ -107,12 +108,12 @@ describe('Firefox', function () {
         });
     });
 
-    it('sends defaults for firefox < 4', function (done) {
+    it('sends defaults for firefox < 4', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -121,7 +122,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['3.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -135,9 +136,9 @@ describe('Firefox', function () {
         });
     });
 
-    it('replaces unsafe-inline with inline-script for older firefox', function (done) {
+    it('replaces unsafe-inline with inline-script for older firefox', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -145,7 +146,7 @@ describe('Firefox', function () {
             options: {
                 scriptSrc: 'unsafe-inline'
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -154,7 +155,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['22.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
@@ -164,9 +165,9 @@ describe('Firefox', function () {
         });
     });
 
-    it('replaces unsafe-eval with eval-script for older firefox', function (done) {
+    it('replaces unsafe-eval with eval-script for older firefox', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -174,7 +175,7 @@ describe('Firefox', function () {
             options: {
                 scriptSrc: 'unsafe-eval'
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -183,7 +184,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['22.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
@@ -193,9 +194,9 @@ describe('Firefox', function () {
         });
     });
 
-    it('removes unsafe-eval from non script-src directives', function (done) {
+    it('removes unsafe-eval from non script-src directives', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -203,7 +204,7 @@ describe('Firefox', function () {
             options: {
                 objectSrc: ['unsafe-inline', 'unsafe-eval', 'self']
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -212,7 +213,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['22.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
@@ -222,9 +223,9 @@ describe('Firefox', function () {
         });
     });
 
-    it('doesnt set empty strings if invalid values are all removed', function (done) {
+    it('doesnt set empty strings if invalid values are all removed', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -232,7 +233,7 @@ describe('Firefox', function () {
             options: {
                 objectSrc: ['unsafe-inline', 'unsafe-eval']
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -241,7 +242,7 @@ describe('Firefox', function () {
                 headers: {
                     'User-Agent': Agents.Firefox['22.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');

@@ -2,9 +2,9 @@
   "name": "blankie",
   "version": "2.1.0",
   "description": "a content security policy plugin for hapi",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "make test-cov"
+    "test": "lab -a code -t 100 -L"
   },
   "repository": {
     "type": "git",
@@ -23,15 +23,15 @@
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
     "browser-agents": "^1.0.1",
-    "code": "^1.4.0",
+    "code": "^4.1.0",
     "handlebars": "^4.0.5",
-    "hapi": ">= 8.0.0 < 11.0.0",
-    "lab": "^5.5.1",
-    "scooter": "^2.0.1",
-    "vision": ">= 1.0.0 < 4.0.0"
+    "hapi": "^16.5.2",
+    "lab": "^14.3.1",
+    "scooter": "^4.0.0",
+    "vision": "^4.1.1"
   },
   "dependencies": {
-    "hoek": "^2.12.0",
-    "joi": "^6.0.8"
+    "hoek": "^4.2.0",
+    "joi": "^10.6.0"
   }
 }

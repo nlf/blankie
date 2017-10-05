@@ -1,40 +1,41 @@
-/* jshint -W030 */
-var Blankie = require('../');
-var Hapi = require('hapi');
-var Scooter = require('scooter');
+'use strict';
 
-var Code = require('code');
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
+const Blankie = require('../');
+const Hapi = require('hapi');
+const Scooter = require('scooter');
 
-var describe = lab.experiment;
-var expect = Code.expect;
-var it = lab.test;
+const Code = require('code');
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 
-describe('Blankie', function () {
+const describe = lab.experiment;
+const expect = Code.expect;
+const it = lab.test;
 
-    it('loads as a plugin', function (done) {
+describe('Blankie', () => {
 
-        var server = new Hapi.Server();
+    it('loads as a plugin', (done) => {
+
+        const server = new Hapi.Server();
         server.connection();
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             done();
         });
     });
 
-    it('errors with invalid options', function (done) {
+    it('errors with invalid options', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.register([Scooter, {
             register: Blankie,
             options: {
                 reportOnly: 'invalid value'
             }
-        }], function (err) {
-        
+        }], (err) => {
+
             expect(err).to.exist();
             done();
         });

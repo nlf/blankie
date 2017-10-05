@@ -1,18 +1,19 @@
-/* jshint -W030 */
-var Agents = require('browser-agents');
-var Blankie = require('../');
-var Hapi = require('hapi');
-var Scooter = require('scooter');
+'use strict';
 
-var Code = require('code');
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
+const Agents = require('browser-agents');
+const Blankie = require('../');
+const Hapi = require('hapi');
+const Scooter = require('scooter');
 
-var describe = lab.experiment;
-var expect = Code.expect;
-var it = lab.test;
+const Code = require('code');
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 
-var defaultRoute = {
+const describe = lab.experiment;
+const expect = Code.expect;
+const it = lab.test;
+
+const defaultRoute = {
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
@@ -21,14 +22,14 @@ var defaultRoute = {
     }
 };
 
-describe('Internet Explorer', function () {
+describe('Internet Explorer', () => {
 
-    it('sends nothing by default', function (done) {
+    it('sends nothing by default', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -37,7 +38,7 @@ describe('Internet Explorer', function () {
                 headers: {
                     'User-Agent': Agents.IE.random()
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');
@@ -47,9 +48,9 @@ describe('Internet Explorer', function () {
         });
     });
 
-    it('sends sandbox headers if set', function (done) {
+    it('sends sandbox headers if set', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -57,7 +58,7 @@ describe('Internet Explorer', function () {
             options: {
                 sandbox: 'allow-same-origin'
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -66,7 +67,7 @@ describe('Internet Explorer', function () {
                 headers: {
                     'User-Agent': Agents.IE.random()
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-content-security-policy');

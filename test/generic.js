@@ -1,19 +1,20 @@
-/* jshint -W030 */
-var Blankie = require('../');
-var Crypto = require('crypto');
-var Hapi = require('hapi');
-var Scooter = require('scooter');
-var Vision = require('vision');
+'use strict';
 
-var Code = require('code');
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
+const Blankie = require('../');
+const Crypto = require('crypto');
+const Hapi = require('hapi');
+const Scooter = require('scooter');
+const Vision = require('vision');
 
-var describe = lab.experiment;
-var expect = Code.expect;
-var it = lab.test;
+const Code = require('code');
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 
-var defaultRoute = {
+const describe = lab.experiment;
+const expect = Code.expect;
+const it = lab.test;
+
+const defaultRoute = {
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
@@ -22,20 +23,20 @@ var defaultRoute = {
     }
 };
 
-describe('Generic headers', function () {
+describe('Generic headers', () => {
 
-    it('sends default headers', function (done) {
+    it('sends default headers', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -50,21 +51,21 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows setting base-uri', function (done) {
+    it('allows setting base-uri', (done) => {
 
-        var server = new Hapi.Server();
-        var options = {
+        const server = new Hapi.Server();
+        const options = {
             baseUri: ['unsafe-inline', 'https://hapijs.com', 'blob:']
-        }
+        };
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+        server.register([Scooter, { register: Blankie, options }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -79,11 +80,11 @@ describe('Generic headers', function () {
         });
     });
 
-    it('adds a nonce to view contexts', function (done) {
+    it('adds a nonce to view contexts', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
-        server.register([Scooter, Blankie, Vision], function (err) {
+        server.register([Scooter, Blankie, Vision], (err) => {
 
             expect(err).to.not.exist();
             server.views({
@@ -105,11 +106,11 @@ describe('Generic headers', function () {
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.result.length).to.be.above(1);
-                var nonces = res.result.trim().split('\n');
+                const nonces = res.result.trim().split('\n');
                 expect(res.headers).to.contain('content-security-policy');
                 expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
                 expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-' + nonces[0] + '\'');
@@ -121,21 +122,21 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows setting unsafe-inline in combination with nonce on script-src', function (done) {
+    it('allows setting unsafe-inline in combination with nonce on script-src', (done) => {
 
-        var server = new Hapi.Server();
-        var options = {
+        const server = new Hapi.Server();
+        const options = {
             scriptSrc: ['unsafe-inline']
-        }
+        };
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+        server.register([Scooter, { register: Blankie, options }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -149,23 +150,23 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows settings strict-dynamic with corresponding nonces', function (done) {
+    it('allows settings strict-dynamic with corresponding nonces', (done) => {
 
-        var server = new Hapi.Server();
-        var options = {
+        const server = new Hapi.Server();
+        const options = {
             scriptSrc: ['strict-dynamic'],
             styleSrc: ['strict-dynamic'],
             generateNonces: true
         };
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+        server.register([Scooter, { register: Blankie, options }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -176,21 +177,21 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows creating nonces for only script-src', function (done) {
+    it('allows creating nonces for only script-src', (done) => {
 
-        var server = new Hapi.Server();
-        var options = {
+        const server = new Hapi.Server();
+        const options = {
             generateNonces: 'script'
         };
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+        server.register([Scooter, { register: Blankie, options }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -201,21 +202,21 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows creating nonces for only style-src', function (done) {
+    it('allows creating nonces for only style-src', (done) => {
 
-        var server = new Hapi.Server();
-        var options = {
+        const server = new Hapi.Server();
+        const options = {
             generateNonces: 'style'
         };
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+        server.register([Scooter, { register: Blankie, options }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -226,9 +227,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('sets headers when content-type is set and is text/html', function (done) {
+    it('sets headers when content-type is set and is text/html', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route({
             method: 'GET',
@@ -239,13 +240,13 @@ describe('Generic headers', function () {
             }
         });
 
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -254,9 +255,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('does not set headers when content-type is set and is not text/html', function (done) {
+    it('does not set headers when content-type is set and is not text/html', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route({
             method: 'GET',
@@ -267,13 +268,13 @@ describe('Generic headers', function () {
             }
         });
 
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.not.contain('content-security-policy');
@@ -282,12 +283,12 @@ describe('Generic headers', function () {
         });
     });
 
-    it('does not blow up if Crypto.pseudoRandomBytes happens to throw', function (done) {
+    it('does not blow up if Crypto.pseudoRandomBytes happens to throw', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             Crypto._randomBytes = Crypto.randomBytes;
@@ -299,7 +300,7 @@ describe('Generic headers', function () {
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -315,18 +316,18 @@ describe('Generic headers', function () {
         });
     });
 
-    it('sends default headers when scooter is not loaded', function (done) {
+    it('sends default headers when scooter is not loaded', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register(Blankie, function (err) {
+        server.register(Blankie, (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -340,9 +341,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('sends report only headers when requested', function (done) {
+    it('sends report only headers when requested', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -352,13 +353,13 @@ describe('Generic headers', function () {
                 reportOnly: true,
                 reportUri: '/csp_report'
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy-report-only');
@@ -369,9 +370,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('does not crash when responding with an error', function (done) {
+    it('does not crash when responding with an error', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route({
             method: 'GET',
@@ -381,13 +382,13 @@ describe('Generic headers', function () {
                 reply(new Error('broken!'));
             }
         });
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(500);
                 expect(res.headers).to.contain('content-security-policy');
@@ -401,9 +402,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows setting the sandbox directive with no values', function (done) {
+    it('allows setting the sandbox directive with no values', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -411,13 +412,13 @@ describe('Generic headers', function () {
             options: {
                 sandbox: true
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -427,9 +428,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows setting array directives to a single string', function (done) {
+    it('allows setting array directives to a single string', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -437,13 +438,13 @@ describe('Generic headers', function () {
             options: {
                 defaultSrc: '*'
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -453,9 +454,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('allows setting array directives to an array of strings', function (done) {
+    it('allows setting array directives to an array of strings', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -463,13 +464,13 @@ describe('Generic headers', function () {
             options: {
                 defaultSrc: ['*', 'self']
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -479,9 +480,9 @@ describe('Generic headers', function () {
         });
     });
 
-    it('can be disabled on a single route', function (done) {
+    it('can be disabled on a single route', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.route({
@@ -497,13 +498,13 @@ describe('Generic headers', function () {
                 }
             }
         });
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -515,19 +516,19 @@ describe('Generic headers', function () {
                 server.inject({
                     method: 'GET',
                     url: '/disabled'
-                }, function (res) {
+                }, (res2) => {
 
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.headers).to.not.contain('content-security-policy');
+                    expect(res2.statusCode).to.equal(200);
+                    expect(res2.headers).to.not.contain('content-security-policy');
                     done();
                 });
             });
         });
     });
 
-    it('can be overridden on a single route', function (done) {
+    it('can be overridden on a single route', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.route({
@@ -545,13 +546,13 @@ describe('Generic headers', function () {
                 }
             }
         });
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -563,20 +564,20 @@ describe('Generic headers', function () {
                 server.inject({
                     method: 'GET',
                     url: '/overridden'
-                }, function (res) {
+                }, (res2) => {
 
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.headers).to.contain('content-security-policy');
-                    expect(res.headers['content-security-policy']).to.contain('default-src \'self\'');
+                    expect(res2.statusCode).to.equal(200);
+                    expect(res2.headers).to.contain('content-security-policy');
+                    expect(res2.headers['content-security-policy']).to.contain('default-src \'self\'');
                     done();
                 });
             });
         });
     });
 
-    it('self disables when a route override is invalid', function (done) {
+    it('self disables when a route override is invalid', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.route({
@@ -594,13 +595,13 @@ describe('Generic headers', function () {
                 }
             }
         });
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
                 method: 'GET',
                 url: '/'
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -612,10 +613,10 @@ describe('Generic headers', function () {
                 server.inject({
                     method: 'GET',
                     url: '/invalid'
-                }, function (res) {
+                }, (res2) => {
 
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.headers).to.not.contain('content-security-policy');
+                    expect(res2.statusCode).to.equal(200);
+                    expect(res2.headers).to.not.contain('content-security-policy');
                     done();
                 });
             });

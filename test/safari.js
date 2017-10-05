@@ -1,18 +1,19 @@
-/* jshint -W030 */
-var Agents = require('browser-agents');
-var Blankie = require('../');
-var Hapi = require('hapi');
-var Scooter = require('scooter');
+'use strict';
 
-var Code = require('code');
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
+const Agents = require('browser-agents');
+const Blankie = require('../');
+const Hapi = require('hapi');
+const Scooter = require('scooter');
 
-var describe = lab.experiment;
-var expect = Code.expect;
-var it = lab.test;
+const Code = require('code');
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 
-var defaultRoute = {
+const describe = lab.experiment;
+const expect = Code.expect;
+const it = lab.test;
+
+const defaultRoute = {
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
@@ -21,14 +22,14 @@ var defaultRoute = {
     }
 };
 
-describe('Safari', function () {
+describe('Safari', () => {
 
-    it('sends defaults for >= 7.0', function (done) {
+    it('sends defaults for >= 7.0', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -37,7 +38,7 @@ describe('Safari', function () {
                 headers: {
                     'User-Agent': Agents.Safari['7.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
@@ -51,12 +52,12 @@ describe('Safari', function () {
         });
     });
 
-    it('sends x-webkit-csp for 6.0', function (done) {
+    it('sends x-webkit-csp for 6.0', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -65,7 +66,7 @@ describe('Safari', function () {
                 headers: {
                     'User-Agent': Agents.Safari['6.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-webkit-csp');
@@ -79,9 +80,9 @@ describe('Safari', function () {
         });
     });
 
-    it('sends x-webkit-csp for 5.0 if oldSafari = true', function (done) {
+    it('sends x-webkit-csp for 5.0 if oldSafari = true', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
         server.register([Scooter, {
@@ -89,7 +90,7 @@ describe('Safari', function () {
             options: {
                 oldSafari: true
             }
-        }], function (err) {
+        }], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -98,7 +99,7 @@ describe('Safari', function () {
                 headers: {
                     'User-Agent': Agents.Safari['5.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('x-webkit-csp');
@@ -112,12 +113,12 @@ describe('Safari', function () {
         });
     });
 
-    it('sends default header for 5.0 if oldSafari = false', function (done) {
+    it('sends default header for 5.0 if oldSafari = false', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], function (err) {
+        server.register([Scooter, Blankie], (err) => {
 
             expect(err).to.not.exist();
             server.inject({
@@ -126,7 +127,7 @@ describe('Safari', function () {
                 headers: {
                     'User-Agent': Agents.Safari['5.0']
                 }
-            }, function (res) {
+            }, (res) => {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
