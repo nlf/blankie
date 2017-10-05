@@ -9,16 +9,18 @@ This plugin depends on [scooter](https://github.com/spumko/scooter) to function.
 To use it:
 
 ```javascript
-var Hapi = require('hapi');
-var Blankie = require('blankie');
-var Scooter = require('scooter');
+'use strict';
 
-var server = new Hapi.Server();
+const Hapi = require('hapi');
+const Blankie = require('blankie');
+const Scooter = require('scooter');
+
+const server = new Hapi.Server();
 
 server.register([Scooter, {
     register: Blankie,
     options: {} // specify options here
-}], function (err) {
+}], (err) => {
 
     if (err) {
         throw err;
@@ -31,11 +33,13 @@ server.register([Scooter, {
 Options may also be set on a per-route basis:
 
 ```javascript
-var Hapi = require('hapi');
-var Blankie = require('blankie');
-var Scooter = require('scooter');
+'use strict';
 
-var server = new Hapi.Server();
+const Hapi = require('hapi');
+const Blankie = require('blankie');
+const Scooter = require('scooter');
+
+const server = new Hapi.Server();
 
 server.route({
     method: 'GET',
