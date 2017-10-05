@@ -1,7 +1,7 @@
 test:
 		@node node_modules/lab/bin/lab -a code
 test-cov:
-		@node node_modules/lab/bin/lab -t 100 -a code
+		@node node_modules/lab/bin/lab -t 100 -a code -I Reflect,WebAssembly
 test-cov-html:
 		@node node_modules/lab/bin/lab -r html -o coverage.html -a code
 
