@@ -6,6 +6,9 @@
   "scripts": {
     "test": "lab -a code -t 100 -L"
   },
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/nlf/blankie.git"
