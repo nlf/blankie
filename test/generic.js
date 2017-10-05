@@ -39,6 +39,36 @@ describe('Generic headers', function () {
 
                 expect(res.statusCode).to.equal(200);
                 expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('base-uri \'self');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-'); // only checks for the nonce- prefix since it's a random value
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+                done();
+            });
+        });
+    });
+
+    it('allows setting base-uri', function (done) {
+
+        var server = new Hapi.Server();
+        var options = {
+            baseUri: ['unsafe-inline', 'https://hapijs.com', 'blob:']
+        }
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, { register: Blankie, options: options }], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('base-uri \'unsafe-inline\' https://hapijs.com blob:');
                 expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
                 expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-'); // only checks for the nonce- prefix since it's a random value
                 expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');

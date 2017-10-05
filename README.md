@@ -60,6 +60,7 @@ You may also set `config.plugins.blankie` equal to `false` on a route to disable
 
 ### Options
 
+* `baseUri`: Values for `base-uri` directive. Defaults `'self'`.
 * `childSrc`: Values for `child-src` directive.
 * `connectSrc`: Values for the `connect-src` directive. Defaults `'self'`.
 * `defaultSrc`: Values for the `default-src` directive. Defaults to `'none'`.
