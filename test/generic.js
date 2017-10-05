@@ -226,6 +226,62 @@ describe('Generic headers', function () {
         });
     });
 
+    it('sets headers when content-type is set and is text/html', function (done) {
+
+        var server = new Hapi.Server();
+        server.connection();
+        server.route({
+            method: 'GET',
+            path: '/',
+            handler: function (request, reply) {
+
+                reply('test').type('text/html');
+            }
+        });
+
+        server.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                done();
+            });
+        });
+    });
+
+    it('does not set headers when content-type is set and is not text/html', function (done) {
+
+        var server = new Hapi.Server();
+        server.connection();
+        server.route({
+            method: 'GET',
+            path: '/',
+            handler: function (request, reply) {
+
+                reply({ some: 'body' }).type('application/json');
+            }
+        });
+
+        server.register([Scooter, Blankie], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.not.contain('content-security-policy');
+                done();
+            });
+        });
+    });
+
     it('does not blow up if Crypto.pseudoRandomBytes happens to throw', function (done) {
 
         var server = new Hapi.Server();
