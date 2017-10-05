@@ -121,6 +121,34 @@ describe('Generic headers', function () {
         });
     });
 
+    it('allows setting unsafe-inline in combination with nonce on script-src', function (done) {
+
+        var server = new Hapi.Server();
+        var options = {
+            scriptSrc: ['unsafe-inline']
+        }
+        server.connection();
+        server.route(defaultRoute);
+        server.register([Scooter, { register: Blankie, options }], function (err) {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/'
+            }, function (res) {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.contain('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('default-src \'none\'');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'unsafe-inline\' \'nonce-'); // only checks for the nonce- prefix since it's a random value
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
+                expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+                done();
+            });
+        });
+    });
+
     it('does not blow up if Crypto.pseudoRandomBytes happens to throw', function (done) {
 
         var server = new Hapi.Server();
