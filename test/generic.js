@@ -512,6 +512,68 @@ describe('Generic headers', () => {
         });
     });
 
+    it('skips headers on OPTIONS requests', (done) => {
+
+        const server = new Hapi.Server();
+        const options = {
+            generateNonces: true
+        };
+        server.connection();
+        server.route({
+            method: 'OPTIONS',
+            path: '/',
+            handler: function (request, reply) {
+
+                return reply();
+            }
+        });
+        server.register([Scooter, { register: Blankie, options }], (err) => {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'OPTIONS',
+                url: '/'
+            }, (res) => {
+
+                expect(res.statusCode).to.equal(200);
+                expect(res.headers).to.not.include('content-security-policy');
+                done();
+            });
+        });
+    });
+
+    it('does not throw on 404 when generating nonces', (done) => {
+
+        const server = new Hapi.Server();
+        const options = {
+            generateNonces: true
+        };
+        server.connection();
+        server.route({
+            method: 'GET',
+            path: '/',
+            handler: function (request, reply) {
+
+                return reply();
+            }
+        });
+        server.register([Scooter, { register: Blankie, options }], (err) => {
+
+            expect(err).to.not.exist();
+            server.inject({
+                method: 'GET',
+                url: '/404'
+            }, (res) => {
+
+                expect(res.statusCode).to.equal(404);
+                expect(res.headers).to.include('content-security-policy');
+                expect(res.headers['content-security-policy']).to.contain('script-src \'self\' \'nonce-');
+                expect(res.headers['content-security-policy']).to.contain('style-src \'self\' \'nonce-');
+                done();
+            });
+        });
+    });
+
     it('can be disabled on a single route', (done) => {
 
         const server = new Hapi.Server();
