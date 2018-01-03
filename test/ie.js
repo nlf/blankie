@@ -5,75 +5,59 @@ const Blankie = require('../');
 const Hapi = require('hapi');
 const Scooter = require('scooter');
 
-const Code = require('code');
-const Lab = require('lab');
-const lab = exports.lab = Lab.script();
-
-const describe = lab.experiment;
-const expect = Code.expect;
-const it = lab.test;
+const { expect } = require('code');
+const { describe, it } = exports.lab = require('lab').script();
 
 const defaultRoute = {
     method: 'GET',
     path: '/',
-    handler: function (request, reply) {
+    handler: () => {
 
-        reply('defaults');
+        return 'defaults';
     }
 };
 
 describe('Internet Explorer', () => {
 
-    it('sends nothing by default', (done) => {
+    it('sends nothing by default', async () => {
 
-        const server = new Hapi.Server();
-        server.connection();
+        const server = Hapi.server();
         server.route(defaultRoute);
-        server.register([Scooter, Blankie], (err) => {
-
-            expect(err).to.not.exist();
-            server.inject({
-                method: 'GET',
-                url: '/',
-                headers: {
-                    'User-Agent': Agents.IE.random()
-                }
-            }, (res) => {
-
-                expect(res.statusCode).to.equal(200);
-                expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('');
-                done();
-            });
+        await server.register([Scooter, Blankie]);
+        const res = await server.inject({
+            method: 'GET',
+            url: '/',
+            headers: {
+                'User-Agent': Agents.IE.random()
+            }
         });
+
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers).to.contain('x-content-security-policy');
+        expect(res.headers['x-content-security-policy']).to.equal('');
     });
 
-    it('sends sandbox headers if set', (done) => {
+    it('sends sandbox headers if set', async () => {
 
-        const server = new Hapi.Server();
-        server.connection();
+        const server = Hapi.server();
         server.route(defaultRoute);
-        server.register([Scooter, {
-            register: Blankie,
+        await server.register([Scooter, {
+            plugin: Blankie,
             options: {
                 sandbox: 'allow-same-origin'
             }
-        }], (err) => {
+        }]);
 
-            expect(err).to.not.exist();
-            server.inject({
-                method: 'GET',
-                url: '/',
-                headers: {
-                    'User-Agent': Agents.IE.random()
-                }
-            }, (res) => {
-
-                expect(res.statusCode).to.equal(200);
-                expect(res.headers).to.contain('x-content-security-policy');
-                expect(res.headers['x-content-security-policy']).to.equal('sandbox allow-same-origin');
-                done();
-            });
+        const res = await server.inject({
+            method: 'GET',
+            url: '/',
+            headers: {
+                'User-Agent': Agents.IE.random()
+            }
         });
+
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers).to.contain('x-content-security-policy');
+        expect(res.headers['x-content-security-policy']).to.equal('sandbox allow-same-origin');
     });
 });

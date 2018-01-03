@@ -4,40 +4,25 @@ const Blankie = require('../');
 const Hapi = require('hapi');
 const Scooter = require('scooter');
 
-const Code = require('code');
-const Lab = require('lab');
-const lab = exports.lab = Lab.script();
-
-const describe = lab.experiment;
-const expect = Code.expect;
-const it = lab.test;
+const { expect } = require('code');
+const { describe, it } = exports.lab = require('lab').script();
 
 describe('Blankie', () => {
 
-    it('loads as a plugin', (done) => {
+    it('loads as a plugin', async () => {
 
-        const server = new Hapi.Server();
-        server.connection();
-        server.register([Scooter, Blankie], (err) => {
-
-            expect(err).to.not.exist();
-            done();
-        });
+        const server = Hapi.server();
+        await server.register([Scooter, Blankie]);
     });
 
-    it('errors with invalid options', (done) => {
+    it('errors with invalid options', async () => {
 
-        const server = new Hapi.Server();
-        server.connection();
-        server.register([Scooter, {
-            register: Blankie,
+        const server = Hapi.server();
+        await expect(server.register([Scooter, {
+            plugin: Blankie,
             options: {
                 reportOnly: 'invalid value'
             }
-        }], (err) => {
-
-            expect(err).to.exist();
-            done();
-        });
+        }])).to.reject(Error, 'child "reportOnly" fails because ["reportOnly" must be a boolean]');
     });
 });

@@ -15,18 +15,23 @@ const Hapi = require('hapi');
 const Blankie = require('blankie');
 const Scooter = require('scooter');
 
-const server = new Hapi.Server();
+const internals = {};
 
-server.register([Scooter, {
-    register: Blankie,
-    options: {} // specify options here
-}], (err) => {
+const server = Hapi.server();
 
-    if (err) {
-        throw err;
-    }
+internals.init = async () => {
 
-    server.start();
+    await server.register([Scooter, {
+        plugin: Blankie,
+        options: {} // specify options here
+    }]);
+
+    await server.start();
+};
+
+internals.init().catch((err) => {
+
+    throw err;
 });
 ```
 
@@ -39,15 +44,15 @@ const Hapi = require('hapi');
 const Blankie = require('blankie');
 const Scooter = require('scooter');
 
-const server = new Hapi.Server();
+const server = Hapi.server();
 
 server.route({
     method: 'GET',
     path: '/something',
     config: {
-        handler: function (request, reply) {
+        handler: (request, h) => {
 
-            reply('these settings are changed');
+            return 'these settings are changed';
         },
         plugins: {
             blankie: {

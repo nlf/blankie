@@ -29,15 +29,15 @@
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
     "browser-agents": "^1.0.1",
-    "code": "^4.1.0",
-    "handlebars": "^4.0.5",
-    "hapi": "^16.5.2",
-    "lab": "^14.3.1",
-    "scooter": "^4.0.0",
-    "vision": "^4.1.1"
+    "code": "^5.1.2",
+    "handlebars": "^4.0.11",
+    "hapi": "^17.2.0",
+    "lab": "^15.1.2",
+    "scooter": "^5.0.0",
+    "vision": "^5.3.0"
   },
   "dependencies": {
-    "hoek": "^4.2.0",
-    "joi": "^10.6.0"
+    "hoek": "^5.0.2",
+    "joi": "^13.0.2"
   }
 }
