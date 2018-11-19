@@ -8,9 +8,11 @@ const { expect } = require('code');
 const { describe, it } = exports.lab = require('lab').script();
 
 describe('Blankie', () => {
+
     it('allows a callback as the only option', async () => {
 
         const cspCallback = function (req) {
+
             const options = {};
             options.baseUri = 'self';
             return options;
