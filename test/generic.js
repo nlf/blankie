@@ -7,6 +7,7 @@ const Scooter = require('scooter');
 const Vision = require('vision');
 
 const { expect } = require('code');
+
 const { describe, it } = exports.lab = require('lab').script();
 
 const defaultRoute = {

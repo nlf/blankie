@@ -6,6 +6,7 @@ const Hapi = require('hapi');
 const Scooter = require('scooter');
 
 const { expect } = require('code');
+
 const { describe, it } = exports.lab = require('lab').script();
 
 const defaultRoute = {
