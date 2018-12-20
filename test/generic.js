@@ -39,6 +39,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
     });
 
     it('allows setting base-uri', async () => {
@@ -62,6 +63,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
     });
 
     it('adds a nonce to view contexts', async () => {
@@ -99,6 +101,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\' \'nonce-' + nonces[1] + '\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
     });
 
     it('allows setting unsafe-inline in combination with nonce on script-src', async () => {
@@ -121,6 +124,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
     });
 
     it('allows settings strict-dynamic with corresponding nonces', async () => {
@@ -250,6 +254,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
         Crypto.randomBytes = Crypto._randomBytes;
         delete Crypto._randomBytes;
     });
@@ -271,6 +276,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
     });
 
     it('sends report only headers when requested', async () => {
@@ -321,6 +327,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
     });
 
     it('allows setting the sandbox directive with no values', async () => {
@@ -492,6 +499,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
 
         const res2 = await server.inject({
             method: 'GET',
@@ -534,6 +542,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
 
         const res2 = await server.inject({
             method: 'GET',
@@ -577,6 +586,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('style-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('img-src \'self\'');
         expect(res.headers['content-security-policy']).to.contain('connect-src \'self\'');
+        expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
 
         const res2 = await server.inject({
             method: 'GET',

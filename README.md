@@ -90,4 +90,5 @@ You may also set `config.plugins.blankie` equal to `false` on a route to disable
 * `sandbox`: Values for the `sandbox` directive. May be a boolean or one of `'allow-forms'`, `'allow-same-origin'`, `'allow-scripts'` or `'allow-top-navigation'`.
 * `scriptSrc`: Values for the `script-src` directive. Defaults to `'self'`.
 * `styleSrc`: Values for the `style-src` directive. Defaults to `'self'`.
+* `workerSrc`: Values for the `worker-src` directive. Defaults to `'self'`.
 * `generateNonces`: Whether or not to automatically generate nonces. Defaults to `true`. May be a boolean or one of `'script'` or `'style'`. When enabled your templates rendered through [vision](https://github.com/hapijs/vision) will have `script-nonce` and/or `style-nonce` automatically added to their context, additionally `request.plugins.blankie.nonces` will contain one or both of the `'script'` and `'style'` properties containing these values for use outside of vision.
