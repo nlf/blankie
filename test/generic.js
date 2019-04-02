@@ -279,7 +279,7 @@ describe('Generic headers', () => {
         expect(res.headers['content-security-policy']).to.contain('worker-src \'self\'');
     });
 
-    it('sends report only headers when requested', async () => {
+    it('sends report only headers when requested using report-uri', async () => {
 
         const server = Hapi.server();
         server.route(defaultRoute);
@@ -301,6 +301,56 @@ describe('Generic headers', () => {
         expect(res.headers).to.contain('content-security-policy-report-only');
         expect(res.headers['content-security-policy-report-only']).to.contain('default-src \'self\'');
         expect(res.headers['content-security-policy-report-only']).to.contain('report-uri /csp_report');
+    });
+
+    it('sends report only headers when requested using report-to', async () => {
+
+        const server = Hapi.server();
+        server.route(defaultRoute);
+        await server.register([Scooter, {
+            plugin: Blankie,
+            options: {
+                defaultSrc: 'self',
+                reportOnly: true,
+                reportTo: 'csp_report'
+            }
+        }]);
+
+        const res = await server.inject({
+            method: 'GET',
+            url: '/'
+        });
+
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers).to.contain('content-security-policy-report-only');
+        expect(res.headers['content-security-policy-report-only']).to.contain('default-src \'self\'');
+        expect(res.headers['content-security-policy-report-only']).to.contain('report-to csp_report');
+    });
+
+    it('sends report only headers when requested using both report-uri and report-to', async () => {
+
+        const server = Hapi.server();
+        server.route(defaultRoute);
+        await server.register([Scooter, {
+            plugin: Blankie,
+            options: {
+                defaultSrc: 'self',
+                reportOnly: true,
+                reportUri: '/csp_report',
+                reportTo: 'csp_report'
+            }
+        }]);
+
+        const res = await server.inject({
+            method: 'GET',
+            url: '/'
+        });
+
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers).to.contain('content-security-policy-report-only');
+        expect(res.headers['content-security-policy-report-only']).to.contain('default-src \'self\'');
+        expect(res.headers['content-security-policy-report-only']).to.contain('report-uri /csp_report');
+        expect(res.headers['content-security-policy-report-only']).to.contain('report-to csp_report'); // browser will only use report-to if it already supports it
     });
 
     it('does not crash when responding with an error', async () => {
