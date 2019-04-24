@@ -1,19 +1,19 @@
 ## blankie
 
-A CSP plugin for [hapi](https://github.com/spumko/hapi).
+A CSP plugin for [hapi](https://github.com/hapijs/hapi).
 
 ### Usage
 
-This plugin depends on [scooter](https://github.com/spumko/scooter) to function.
+This plugin depends on [scooter](https://github.com/hapijs/scooter) to function.
 
 To use it:
 
 ```javascript
 'use strict';
 
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const Blankie = require('blankie');
-const Scooter = require('scooter');
+const Scooter = require('@hapi/scooter');
 
 const internals = {};
 
@@ -40,9 +40,9 @@ Options may also be set on a per-route basis:
 ```javascript
 'use strict';
 
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const Blankie = require('blankie');
-const Scooter = require('scooter');
+const Scooter = require('@hapi/scooter');
 
 const server = Hapi.server();
 

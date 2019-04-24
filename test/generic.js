@@ -2,13 +2,13 @@
 
 const Blankie = require('../');
 const Crypto = require('crypto');
-const Hapi = require('hapi');
-const Scooter = require('scooter');
-const Vision = require('vision');
+const Hapi = require('@hapi/hapi');
+const Scooter = require('@hapi/scooter');
+const Vision = require('@hapi/vision');
 
-const { expect } = require('code');
+const { expect } = require('@hapi/code');
 
-const { describe, it } = exports.lab = require('lab').script();
+const { describe, it } = exports.lab = require('@hapi/lab').script();
 
 const defaultRoute = {
     method: 'GET',

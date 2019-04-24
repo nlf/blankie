@@ -1,12 +1,12 @@
 'use strict';
 
 const Blankie = require('../');
-const Hapi = require('hapi');
-const Scooter = require('scooter');
+const Hapi = require('@hapi/hapi');
+const Scooter = require('@hapi/scooter');
 
-const { expect } = require('code');
+const { expect } = require('@hapi/code');
 
-const { describe, it } = exports.lab = require('lab').script();
+const { describe, it } = exports.lab = require('@hapi/lab').script();
 
 describe('Callbacks', () => {
 
