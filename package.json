@@ -1,6 +1,6 @@
 {
   "name": "blankie",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "a content security policy plugin for hapi",
   "main": "lib/index.js",
   "scripts": {
