@@ -29,12 +29,12 @@
   "homepage": "https://github.com/nlf/blankie",
   "devDependencies": {
     "@hapi/code": "^5.3.1",
-    "@hapi/hapi": "^18.3.1",
+    "@hapi/hapi": "^19.1.0",
     "@hapi/lab": "^18.1.2",
     "@hapi/scooter": "^5.1.0",
     "@hapi/vision": "^5.5.2",
     "browser-agents": "^1.0.1",
-    "handlebars": "^4.1.2"
+    "handlebars": "^4.7.3"
   },
   "dependencies": {
     "@hapi/hoek": "^6.2.1",
