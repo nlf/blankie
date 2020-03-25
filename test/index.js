@@ -24,6 +24,6 @@ describe('Blankie', () => {
             options: {
                 reportOnly: 'invalid value'
             }
-        }])).to.reject(Error, 'child "reportOnly" fails because ["reportOnly" must be a boolean]');
+        }])).to.reject(Error, '"reportOnly" must be a boolean');
     });
 });

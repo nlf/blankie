@@ -439,7 +439,7 @@ describe('Generic headers', () => {
             url: '/'
         });
 
-        expect(res.statusCode).to.equal(200);
+        expect(res.statusCode).to.equal(204);
         expect(res.headers).to.not.include('content-security-policy');
     });
 
