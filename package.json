@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "@hapi/hoek": "^9.0.3",
-    "@hapi/joi": "^17.1.0"
+    "joi": "^17.3.0"
   }
 }
