@@ -30,7 +30,7 @@
   "devDependencies": {
     "@hapi/code": "^8.0.1",
     "@hapi/hapi": "^19.1.1",
-    "@hapi/lab": "^22.0.3",
+    "@hapi/lab": "^24.5.1",
     "@hapi/scooter": "^6.0.0",
     "@hapi/vision": "^6.0.0",
     "browser-agents": "^1.0.1",
@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "@hapi/hoek": "^9.0.3",
-    "@hapi/joi": "^17.1.0"
+    "joi": "^17.6.0"
   }
 }
