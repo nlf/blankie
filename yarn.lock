@@ -338,12 +338,12 @@
     "@hapi/podium" "4.x.x"
     "@hapi/validate" "1.x.x"
 
-"@hapi/code@^8.0.1":
-  version "8.0.7"
-  resolved "https://registry.yarnpkg.com/@hapi/code/-/code-8.0.7.tgz#96b531cd2ede986e2e2e9817a8d996634ff98bed"
-  integrity sha512-4FTubqMVwbeMmmpxtmpdDz8xo24JQydAGNneGUDkj3lV6H7zUBPrufUvajFlTMZC7MdNV+apZImNJUIZt1gD/Q==
+"@hapi/code@^9.0.3":
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/@hapi/code/-/code-9.0.3.tgz#35e9f9e950827b7f5e9590147ea6d07f653d4438"
+  integrity sha512-g50b7qz861Xfnt1NWtcba1zVxlHLPDJh/4ys6pva6jMmQgbTDLgAkbORDHYbVSA7mYxZ2cHZ2n7ZeFb5j/ZhQw==
   dependencies:
-    "@hapi/hoek" "9.x.x"
+    "@hapi/hoek" "^11.0.2"
 
 "@hapi/content@^5.0.2":
   version "5.0.2"
