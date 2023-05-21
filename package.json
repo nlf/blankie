@@ -33,7 +33,7 @@
     "@hapi/hapi": "^21.3.2",
     "@hapi/lab": "^25.0.0",
     "@hapi/scooter": "^6.0.0",
-    "@hapi/vision": "^6.0.0",
+    "@hapi/vision": "^7.0.1",
     "browser-agents": "^1.0.1",
     "handlebars": "^4.7.3"
   },
