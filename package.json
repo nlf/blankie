@@ -4,7 +4,8 @@
   "description": "a content security policy plugin for hapi",
   "main": "lib/index.js",
   "scripts": {
-    "test": "lab -a @hapi/code -t 100 -L"
+    "test": "lab -a @hapi/code -t 100 -L",
+    "release": "release-it"
   },
   "engines": {
     "node": ">= 8.9.0"
@@ -35,7 +36,8 @@
     "@hapi/scooter": "^7.0.0",
     "@hapi/vision": "^7.0.1",
     "browser-agents": "^1.0.1",
-    "handlebars": "^4.7.3"
+    "handlebars": "^4.7.3",
+    "release-it": "^15.10.3"
   },
   "dependencies": {
     "@hapi/hoek": "^11.0.2",
