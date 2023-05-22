@@ -38,7 +38,7 @@
     "handlebars": "^4.7.3"
   },
   "dependencies": {
-    "@hapi/hoek": "^9.0.3",
+    "@hapi/hoek": "^11.0.2",
     "joi": "^17.9.2"
   }
 }
